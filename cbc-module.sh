@@ -21,3 +21,19 @@ tcl() {
 
   tmux select-pane -t "$top_left_pane"
 }
+
+tsl() {
+  [[ -z $TMUX ]] && { echo "You must start tmux to use tsl."; return 1; }
+
+  local current_dir="${PWD}"
+  local left_pane
+
+  left_pane="$TMUX_PANE"
+
+  tmux rename-window -t "$left_pane" "$(basename "$current_dir")"
+
+  tmux split-window -h -p 30 -t "$left_pane" -c "$current_dir" "bash -lc 'opencode; exec bash -l'"
+  tmux respawn-pane -k -t "$left_pane" -c "$current_dir" "bash -lc 'yazi; exec bash -l'"
+
+  tmux select-pane -t "$left_pane"
+}
