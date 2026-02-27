@@ -95,7 +95,7 @@ tcl() {
   bottom_pane="$TMUX_PANE"
   tmux rename-window -t "$bottom_pane" "$(basename "$current_dir")"
   # Top = 55%, Bottom = 45%
-  top_left_pane=$(tmux split-window -v -b -p 55 -t "$bottom_pane" -c "$current_dir" -P -F '#{pane_id}' "bash -lc 'yazi; exec bash -l'")
+  top_left_pane=$(tmux split-window -v -b -p 60 -t "$bottom_pane" -c "$current_dir" -P -F '#{pane_id}' "bash -lc 'yazi; exec bash -l'")
   top_right_pane=$(tmux split-window -h -p 30 -t "$top_left_pane" -c "$current_dir" -P -F '#{pane_id}' "bash -lc 'opencode; exec bash -l'")
   # Bottom pane: plain terminal unless current dir is a git repo
   if git -C "$current_dir" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
