@@ -22,6 +22,33 @@ tcl() {
   tmux select-pane -t "$top_left_pane"
 }
 
+# Apply tcl layout to each subdirectory in the current directory
+# Usage: tclm
+tclm() {
+  [[ -z $TMUX ]] && { echo "You must start tmux to use tclm."; return 1; }
+
+  local base_dir="${PWD}"
+  local first=true
+
+  # Rename the session to the current directory name
+  tmux rename-session "$(basename "$base_dir" | tr '.:' '--')"
+
+  for dir in "$base_dir"/*/; do
+    [[ -d $dir ]] || continue
+    local dirpath="${dir%/}"
+
+    if $first; then
+      # Reuse the current window for the first project
+      tmux send-keys -t "$TMUX_PANE" "cd '$dirpath' && tcl" C-m
+      first=false
+    else
+      local pane_id
+      pane_id=$(tmux new-window -c "$dirpath" -P -F '#{pane_id}')
+      tmux send-keys -t "$pane_id" "tcl" C-m
+    fi
+  done
+}
+
 tsl() {
   [[ -z $TMUX ]] && { echo "You must start tmux to use tsl."; return 1; }
 
