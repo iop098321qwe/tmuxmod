@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.3](https://github.com/iop098321qwe/tmuxmod/compare/v0.0.2...v0.0.3) (2026-02-28)
+
+
+### Features
+
+* **layout:** add tclm multi-directory tmux launcher ([8fc44d8](https://github.com/iop098321qwe/tmuxmod/commit/8fc44d855689bb8d2f1b6926b7a97c7b8dfe6c57))
+
 ## [0.0.2](https://github.com/iop098321qwe/tmuxmod/compare/v0.0.1...v0.0.2) (2026-02-27)
 
 
