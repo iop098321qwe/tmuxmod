@@ -49,8 +49,8 @@ tclm() {
   done
 }
 
-tsl() {
-  [[ -z $TMUX ]] && { echo "You must start tmux to use tsl."; return 1; }
+tal() {
+  [[ -z $TMUX ]] && { echo "You must start tmux to use tal."; return 1; }
 
   local current_dir="${PWD}"
   local left_pane
@@ -65,9 +65,9 @@ tsl() {
   tmux select-pane -t "$left_pane"
 }
 
-# Apply tsl layout to each subdirectory in the current directory
+# Apply tal layout to each subdirectory in the current directory
 # Usage: tslm
-tslm() {
+talm() {
   [[ -z $TMUX ]] && { echo "You must start tmux to use tslm."; return 1; }
 
   local base_dir="${PWD}"
@@ -82,12 +82,12 @@ tslm() {
 
     if $first; then
       # Reuse the current window for the first project
-      tmux send-keys -t "$TMUX_PANE" "cd '$dirpath' && tsl" C-m
+      tmux send-keys -t "$TMUX_PANE" "cd '$dirpath' && tal" C-m
       first=false
     else
       local pane_id
       pane_id=$(tmux new-window -c "$dirpath" -P -F '#{pane_id}')
-      tmux send-keys -t "$pane_id" "tsl" C-m
+      tmux send-keys -t "$pane_id" "tal" C-m
     fi
   done
 }
