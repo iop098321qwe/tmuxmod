@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.5](https://github.com/iop098321qwe/tmuxmod/compare/v0.0.4...v0.0.5) (2026-03-17)
+
+
+### Bug Fixes
+
+* **function:** change `tsl` overwrite to separate `tal` call ([68a5d36](https://github.com/iop098321qwe/tmuxmod/commit/68a5d3649dea4c0cb167fb48bd19c7c171fb2912))
+
 ## [0.0.4](https://github.com/iop098321qwe/tmuxmod/compare/v0.0.3...v0.0.4) (2026-03-17)
 
 
