@@ -49,7 +49,7 @@ tclm() {
   done
 }
 
-tsl() {
+tal() {
   [[ -z $TMUX ]] && { echo "You must start tmux to use tsl."; return 1; }
 
   local current_dir="${PWD}"
@@ -67,7 +67,7 @@ tsl() {
 
 # Apply tsl layout to each subdirectory in the current directory
 # Usage: tslm
-tslm() {
+talm() {
   [[ -z $TMUX ]] && { echo "You must start tmux to use tslm."; return 1; }
 
   local base_dir="${PWD}"
