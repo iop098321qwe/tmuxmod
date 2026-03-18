@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.7](https://github.com/iop098321qwe/tmuxmod/compare/v0.0.6...v0.0.7) (2026-03-18)
+
+
+### Features
+
+* **layout:** add tn window launcher for tal/tcl ([e5de9b1](https://github.com/iop098321qwe/tmuxmod/commit/e5de9b1b275f3ca83b99459a10bc4a5d31682538))
+
+
+### Bug Fixes
+
+* **layout:** allow tn to run arbitrary commands instead of hardcoded commands ([bb8b1d9](https://github.com/iop098321qwe/tmuxmod/commit/bb8b1d9399bf208d7bc5cb6269f62188aa6f19b5))
+
 ## [0.0.6](https://github.com/iop098321qwe/tmuxmod/compare/v0.0.5...v0.0.6) (2026-03-18)
 
 
