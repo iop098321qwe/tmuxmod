@@ -220,8 +220,8 @@ talf() {
   done
 }
 
-# Open a new window with tal or tcl for selected subdirectory
-# Usage: tn {tal|tcl}
+# Open a new window for selected subdirectory
+# Usage: tn [command...]
 tn() {
   [[ -z $TMUX ]] && { echo "You must start tmux to use tn."; return 1; }
 
@@ -229,20 +229,6 @@ tn() {
     echo "gum is required to use tn."
     return 1
   fi
-
-  local layout="${1:-}"
-
-  case "$layout" in
-    tal|tcl) ;;
-    "")
-      echo "Usage: tn {tal|tcl}."
-      return 1
-      ;;
-    *)
-      echo "Unsupported layout: $layout. Use tal or tcl."
-      return 1
-      ;;
-  esac
 
   local base_dir="${PWD}"
   local -a dir_names=()
@@ -278,5 +264,9 @@ tn() {
 
   local pane_id
   pane_id=$(tmux new-window -c "$target_dir" -P -F '#{pane_id}')
-  tmux send-keys -t "$pane_id" "$layout" C-m
+
+  local cmd="$*"
+  if [[ -n $cmd ]]; then
+    tmux send-keys -t "$pane_id" "$cmd" C-m
+  fi
 }
