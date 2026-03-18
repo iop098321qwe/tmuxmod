@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.8](https://github.com/iop098321qwe/tmuxmod/compare/v0.0.7...v0.0.8) (2026-03-18)
+
+
+### Features
+
+* **layout:** allow tn to open multiple directories ([72ab167](https://github.com/iop098321qwe/tmuxmod/commit/72ab167db0fd4f5a416a74d3e8bea1e0e9a07b26))
+
 ## [0.0.7](https://github.com/iop098321qwe/tmuxmod/compare/v0.0.6...v0.0.7) (2026-03-18)
 
 
