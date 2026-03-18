@@ -91,3 +91,67 @@ talm() {
     fi
   done
 }
+
+# Apply tal layout to selected subdirectories in the current directory
+# Usage: talf
+talf() {
+  [[ -z $TMUX ]] && { echo "You must start tmux to use talf."; return 1; }
+
+  if ! command -v gum >/dev/null 2>&1; then
+    echo "gum is required to use talf."
+    return 1
+  fi
+
+  local base_dir="${PWD}"
+  local first=true
+  local -a dir_names=()
+  local -a dir_paths=()
+
+  local dir
+  for dir in "$base_dir"/*/; do
+    [[ -d $dir ]] || continue
+    local dirpath="${dir%/}"
+    dir_paths+=("$dirpath")
+    dir_names+=("$(basename "$dirpath")")
+  done
+
+  if ((${#dir_names[@]} == 0)); then
+    echo "No subdirectories found in $base_dir."
+    return 0
+  fi
+
+  local selected
+  local -a selected_dirs=()
+
+  selected=$(printf '%s\n' "${dir_names[@]}" | gum choose --no-limit) || return 0
+  [[ -z $selected ]] && return 0
+
+  mapfile -t selected_dirs <<<"$selected"
+
+  # Rename the session to the current directory name
+  tmux rename-session "$(basename "$base_dir" | tr '.:' '--')"
+
+  local name
+  for name in "${selected_dirs[@]}"; do
+    local dirpath=""
+    local i
+    for i in "${!dir_names[@]}"; do
+      if [[ ${dir_names[$i]} == "$name" ]]; then
+        dirpath="${dir_paths[$i]}"
+        break
+      fi
+    done
+
+    [[ -z $dirpath ]] && continue
+
+    if $first; then
+      # Reuse the current window for the first project
+      tmux send-keys -t "$TMUX_PANE" "cd '$dirpath' && tal" C-m
+      first=false
+    else
+      local pane_id
+      pane_id=$(tmux new-window -c "$dirpath" -P -F '#{pane_id}')
+      tmux send-keys -t "$pane_id" "tal" C-m
+    fi
+  done
+}
