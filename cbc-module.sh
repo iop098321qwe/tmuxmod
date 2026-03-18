@@ -219,3 +219,64 @@ talf() {
     fi
   done
 }
+
+# Open a new window with tal or tcl for selected subdirectory
+# Usage: tn {tal|tcl}
+tn() {
+  [[ -z $TMUX ]] && { echo "You must start tmux to use tn."; return 1; }
+
+  if ! command -v gum >/dev/null 2>&1; then
+    echo "gum is required to use tn."
+    return 1
+  fi
+
+  local layout="${1:-}"
+
+  case "$layout" in
+    tal|tcl) ;;
+    "")
+      echo "Usage: tn {tal|tcl}."
+      return 1
+      ;;
+    *)
+      echo "Unsupported layout: $layout. Use tal or tcl."
+      return 1
+      ;;
+  esac
+
+  local base_dir="${PWD}"
+  local -a dir_names=()
+  local -a dir_paths=()
+
+  local dir
+  for dir in "$base_dir"/*/; do
+    [[ -d $dir ]] || continue
+    local dirpath="${dir%/}"
+    dir_paths+=("$dirpath")
+    dir_names+=("$(basename "$dirpath")")
+  done
+
+  if ((${#dir_names[@]} == 0)); then
+    echo "No subdirectories found in $base_dir."
+    return 0
+  fi
+
+  local selected
+  selected=$(printf '%s\n' "${dir_names[@]}" | gum choose) || return 0
+  [[ -z $selected ]] && return 0
+
+  local target_dir=""
+  local i
+  for i in "${!dir_names[@]}"; do
+    if [[ ${dir_names[$i]} == "$selected" ]]; then
+      target_dir="${dir_paths[$i]}"
+      break
+    fi
+  done
+
+  [[ -z $target_dir ]] && return 0
+
+  local pane_id
+  pane_id=$(tmux new-window -c "$target_dir" -P -F '#{pane_id}')
+  tmux send-keys -t "$pane_id" "$layout" C-m
+}
