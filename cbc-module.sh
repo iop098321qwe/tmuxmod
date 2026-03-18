@@ -220,7 +220,7 @@ talf() {
   done
 }
 
-# Open a new window for selected subdirectory
+# Open new windows for selected subdirectories
 # Usage: tn [command...]
 tn() {
   [[ -z $TMUX ]] && { echo "You must start tmux to use tn."; return 1; }
@@ -247,26 +247,33 @@ tn() {
     return 0
   fi
 
+  local cmd="$*"
   local selected
-  selected=$(printf '%s\n' "${dir_names[@]}" | gum choose) || return 0
+  local -a selected_dirs=()
+
+  selected=$(printf '%s\n' "${dir_names[@]}" | gum choose --no-limit) || return 0
   [[ -z $selected ]] && return 0
 
-  local target_dir=""
-  local i
-  for i in "${!dir_names[@]}"; do
-    if [[ ${dir_names[$i]} == "$selected" ]]; then
-      target_dir="${dir_paths[$i]}"
-      break
+  mapfile -t selected_dirs <<<"$selected"
+
+  local name
+  for name in "${selected_dirs[@]}"; do
+    local target_dir=""
+    local i
+    for i in "${!dir_names[@]}"; do
+      if [[ ${dir_names[$i]} == "$name" ]]; then
+        target_dir="${dir_paths[$i]}"
+        break
+      fi
+    done
+
+    [[ -z $target_dir ]] && continue
+
+    local pane_id
+    pane_id=$(tmux new-window -c "$target_dir" -P -F '#{pane_id}')
+
+    if [[ -n $cmd ]]; then
+      tmux send-keys -t "$pane_id" "$cmd" C-m
     fi
   done
-
-  [[ -z $target_dir ]] && return 0
-
-  local pane_id
-  pane_id=$(tmux new-window -c "$target_dir" -P -F '#{pane_id}')
-
-  local cmd="$*"
-  if [[ -n $cmd ]]; then
-    tmux send-keys -t "$pane_id" "$cmd" C-m
-  fi
 }
