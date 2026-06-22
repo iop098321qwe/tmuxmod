@@ -1,0 +1,26 @@
+{
+  "name": "tmuxmod",
+  "version": "0.0.8",
+  "description": "Tmux layout helpers for launching workspaces with yazi, opencode, and lazygit. Includes multi-project workflows for applying layouts across directories.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/iop098321qwe/tmuxmod.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/iop098321qwe/tmuxmod/issues"
+  },
+  "homepage": "https://github.com/iop098321qwe/tmuxmod#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.2",
+    "@commitlint/config-conventional": "^21.0.2",
+    "husky": "^9.1.7"
+  }
+}
