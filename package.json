@@ -4,7 +4,8 @@
   "description": "Tmux layout helpers for launching workspaces with yazi, opencode, and lazygit. Includes multi-project workflows for applying layouts across directories.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
